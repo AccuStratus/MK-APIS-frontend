@@ -60,6 +60,7 @@
 
       <MeterDashboard v-if="tab === 'meter'" />
       <WorkOrderPanel v-if="tab === 'wo'" />
+      <RunCardPanel v-if="tab === 'run_card'" />
       <InventoryPanel v-if="tab === 'inventory'" />
       <RealtimeEventPanel v-if="tab === 'realtime_event'" />
       <IntegrationOutputPanel v-if="tab === 'integration_output'" />
@@ -87,6 +88,7 @@ import LineSideLogisticsSimulator from './components/LineSideLogisticsSimulator.
 
 import MeterDashboard from './components/MeterDashboard.vue'
 import WorkOrderPanel from './components/WorkOrderPanel.vue'
+import RunCardPanel from './components/RunCardPanel.vue'
 import InventoryPanel from './components/InventoryPanel.vue'
 import RealtimeEventPanel from './components/RealtimeEventPanel.vue'
 import IntegrationOutputPanel from './components/IntegrationOutputPanel.vue'
@@ -143,6 +145,7 @@ const menuGroups = [
     children: [
       { key: 'meter', label: 'CNC 智慧電表', icon: '⚡' },
       { key: 'wo', label: 'ERP 製令單', icon: '📋' },
+      { key: 'run_card', label: '製令流程卡 / AI', icon: '🧾' },
       { key: 'inventory', label: 'WMS 線邊庫', icon: '📦' },
       { key: 'realtime_event', label: '即時事件', icon: '📡' },
       { key: 'integration_output', label: '對外整合輸出', icon: '📤' }
