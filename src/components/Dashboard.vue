@@ -59,7 +59,7 @@
     </div>
 
     <div class="card">
-      <h2>老闆看得懂的最新建議</h2>
+      <h2>最新建議</h2>
 
       <div class="action-list">
         <div

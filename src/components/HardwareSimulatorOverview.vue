@@ -2,7 +2,7 @@
   <div class="page">
     <div class="page-header">
       <div>
-        <h1 class="page-title">硬體架構圖二：現場設備與作業區模擬器</h1>
+        <h1 class="page-title">現場設備與作業區模擬器</h1>
         <p class="page-subtitle">WiFi PDA、NFC / QR Code、CNC 智慧電表、線邊庫人工物流，全部串到 FastAPI、PostgreSQL 與 AIPS 流程。</p>
       </div>
       <button @click="load">重新整理</button>

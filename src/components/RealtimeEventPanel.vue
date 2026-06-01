@@ -14,6 +14,10 @@
       </div>
     </div>
 
+    <div v-if="message" class="form-preview">
+      <strong>操作結果：</strong>{{ message }}
+    </div>
+
     <div class="metric-grid">
       <div class="metric-card">
         <div class="metric-label">即時事件</div>
@@ -46,6 +50,7 @@ import DataTable from './DataTable.vue'
 
 const events = ref([])
 const pushes = ref([])
+const message = ref('')
 
 const eventColumns = ['event_id', 'event_time', 'event_source', 'event_type', 'event_level', 'topic', 'process_status']
 const eventLabels = {
@@ -70,25 +75,42 @@ const pushLabels = {
 }
 
 async function load() {
-  events.value = (await apiClient.get('/architecture/events/realtime')).data
-  pushes.value = (await apiClient.get('/architecture/events/websocket-push')).data
+  const ts = Date.now()
+  events.value = (await apiClient.get(`/architecture/events/realtime?_=${ts}`)).data || []
+  pushes.value = (await apiClient.get(`/architecture/events/websocket-push?_=${ts}`)).data || []
 }
 
 async function createEvent() {
-  await apiClient.post('/architecture/events/realtime/demo').catch(showError)
-  await load()
+  try {
+    const res = await apiClient.post('/architecture/events/realtime/demo')
+    if (Array.isArray(res.data?.latest)) {
+      events.value = res.data.latest
+    }
+    message.value = `已新增 MQTT 事件，編號：${res.data?.event_id || ''}`
+    await load()
+  } catch (err) {
+    showError(err)
+  }
 }
 
 async function createPush() {
-  await apiClient.post('/architecture/events/websocket-push/demo').catch(showError)
-  await load()
+  try {
+    const res = await apiClient.post('/architecture/events/websocket-push/demo')
+    if (Array.isArray(res.data?.latest)) {
+      pushes.value = res.data.latest
+    }
+    message.value = `已新增 WebSocket 推播，編號：${res.data?.push_id || ''}`
+    await load()
+  } catch (err) {
+    showError(err)
+  }
 }
-
-onMounted(load)
 
 function showError(err) {
   const detail = err?.response?.data?.detail || err?.response?.data?.message || err?.message || 'API 發生錯誤'
+  message.value = detail
   alert(detail)
-  throw err
 }
+
+onMounted(load)
 </script>
