@@ -30,7 +30,8 @@ body {
 
 .sidebar {
   width: var(--sidebar-width);
-  min-height: 100vh;
+  height: 100vh;
+  max-height: 100vh;
   background: #0f172a;
   color: #e5e7eb;
   display: flex;
@@ -39,6 +40,7 @@ body {
   left: 0;
   top: 0;
   bottom: 0;
+  overflow: hidden;
 }
 
 .brand {
@@ -47,6 +49,7 @@ body {
   align-items: center;
   padding: 22px 18px;
   border-bottom: 1px solid rgba(255,255,255,0.08);
+  flex: 0 0 auto;
 }
 
 .brand-logo {
@@ -78,7 +81,30 @@ body {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  flex: 1;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.75) rgba(15, 23, 42, 0.35);
+}
+
+.side-menu::-webkit-scrollbar {
+  width: 8px;
+}
+
+.side-menu::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.35);
+}
+
+.side-menu::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.65);
+  border-radius: 999px;
+}
+
+.side-menu::-webkit-scrollbar-thumb:hover {
+  background: rgba(203, 213, 225, 0.85);
 }
 
 .side-menu button {
@@ -117,6 +143,7 @@ body {
   border-top: 1px solid rgba(255,255,255,0.08);
   color: #cbd5e1;
   font-size: 13px;
+  flex: 0 0 auto;
 }
 
 .sidebar-footer small {
@@ -635,6 +662,8 @@ pre {
   background: rgba(255,255,255,0.06);
   border-radius: 14px;
   color: #e2e8f0;
+
+  flex: 0 0 auto;
 }
 
 .user-name {
@@ -653,4 +682,34 @@ pre {
   background: rgba(255,255,255,0.08);
   color: #e2e8f0;
   border: 1px solid rgba(255,255,255,0.14);
+}
+
+
+@media (max-height: 760px) {
+  .brand {
+    padding: 14px 14px;
+  }
+
+  .user-box {
+    margin: 10px;
+    padding: 10px;
+  }
+
+  .side-menu {
+    padding: 8px 8px;
+  }
+
+  .side-menu button {
+    padding: 9px 10px;
+    font-size: 14px;
+  }
+
+  .submenu button {
+    padding: 7px 8px;
+    font-size: 13px;
+  }
+
+  .sidebar-footer {
+    padding: 10px 14px;
+  }
 }

@@ -67,6 +67,7 @@
 
       <AipsStatePanel v-if="tab === 'state'" />
       <DqnActionPanel v-if="tab === 'action'" />
+      <DqnExplainPanel v-if="tab === 'dqn_explain'" />
       <PredictionPanel v-if="tab === 'prediction'" />
       <RewardPanel v-if="tab === 'reward'" />
     </main>
@@ -95,6 +96,7 @@ import IntegrationOutputPanel from './components/IntegrationOutputPanel.vue'
 
 import AipsStatePanel from './components/AipsStatePanel.vue'
 import DqnActionPanel from './components/DqnActionPanel.vue'
+import DqnExplainPanel from './components/DqnExplainPanel.vue'
 import PredictionPanel from './components/PredictionPanel.vue'
 import RewardPanel from './components/RewardPanel.vue'
 
@@ -157,6 +159,7 @@ const menuGroups = [
     children: [
       { key: 'state', label: 'DQN State', icon: '🧠' },
       { key: 'action', label: 'DQN 排程建議', icon: '✅' },
+      { key: 'dqn_explain', label: 'DQN Reward 說明', icon: '🎯' },
       { key: 'prediction', label: 'AI 生產預測', icon: '📈' },
       { key: 'reward', label: 'Reward 回饋', icon: '🏆' }
     ]
