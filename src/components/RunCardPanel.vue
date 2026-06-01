@@ -20,6 +20,14 @@
       <strong>操作結果：</strong>{{ message }}
     </div>
 
+    <div class="form-preview">
+      <strong>AI 引擎狀態：</strong>
+      PyTorch={{ aiStatus.pytorch ? '已啟用' : '未啟用' }}
+      <span v-if="aiStatus.torch_version">({{ aiStatus.torch_version }})</span>，
+      statsmodels ARIMA={{ aiStatus.statsmodels ? '已啟用' : '未啟用' }}
+      <span v-if="aiStatus.statsmodels_version">({{ aiStatus.statsmodels_version }})</span>
+    </div>
+
     <div class="metric-grid">
       <div class="metric-card">
         <div class="metric-label">流程卡單頭</div>
@@ -96,6 +104,7 @@ const features = ref([])
 const suggestions = ref([])
 const selectedRunCardId = ref('')
 const message = ref('')
+const aiStatus = ref({})
 
 const form = ref({
   run_card_no: 'MK20240069',
@@ -125,7 +134,12 @@ async function loadDqnActions() {
   suggestions.value = res.data || []
 }
 
+async function loadAiStatus() {
+  aiStatus.value = (await apiClient.get('/run-cards/ai/status')).data || {}
+}
+
 async function load() {
+  await loadAiStatus()
   headers.value = (await apiClient.get('/run-cards/headers')).data || []
   features.value = (await apiClient.get('/run-cards/features')).data || []
   await loadDqnActions()
