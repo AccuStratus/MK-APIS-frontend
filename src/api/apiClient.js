@@ -4,24 +4,28 @@ function isLocalHostName(hostname) {
   return hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '::1'
 }
 
-function isLocalApiUrl(url) {
-  return url.includes('127.0.0.1') || url.includes('localhost')
+function isBadExternalApiUrl(url) {
+  return url.includes('114.34.58.174') || url.includes('192.168.1.15') || url.includes('localhost') || url.includes('127.0.0.1')
 }
 
 function resolveApiBaseUrl() {
-  const envUrl = (import.meta.env.VITE_AIPS_API_BASE_URL || '').trim()
+  const envUrl = (import.meta.env.VITE_AIPS_API_BASE_URL || '').trim().replace(/\/$/, '')
   const { protocol, hostname } = window.location
 
-  // 關鍵修正：
-  // 如果使用者是從別台電腦用 http://192.168.x.x:5173 連進來，
-  // 就算 .env 還殘留 http://127.0.0.1:8000/api，也不要使用 127.0.0.1。
+  // FIX16：本機開 127.0.0.1:5173 / localhost:5173 時，強制打本機 API。
+  // 避免 Vite 舊快取或舊 .env 仍打到 114.34.58.174。
+  if (isLocalHostName(hostname)) {
+    return 'http://127.0.0.1:8000/api'
+  }
+
+  // LAN 連線時，優先打同一台主機的 8000。
+  // 例如 http://192.168.1.50:5173 => http://192.168.1.50:8000/api
   if (!isLocalHostName(hostname)) {
     return `${protocol}//${hostname}:8000/api`
   }
 
-  // 只有在本機 localhost 開前端時，才允許使用 .env。
-  if (envUrl && envUrl !== '') {
-    return envUrl.replace(/\/$/, '')
+  if (envUrl) {
+    return envUrl
   }
 
   return `${protocol}//${hostname}:8000/api`
@@ -29,7 +33,7 @@ function resolveApiBaseUrl() {
 
 const apiClient = axios.create({
   baseURL: resolveApiBaseUrl(),
-  timeout: 15000,
+  timeout: 30000,
   headers: {
     'Content-Type': 'application/json'
   }
@@ -41,10 +45,12 @@ apiClient.interceptors.request.use((config) => {
     config.headers.Authorization = `Bearer ${token}`
   }
 
-  // 再保險一次：
-  // 防止任何地方意外把 baseURL 設回 127.0.0.1。
   const { protocol, hostname } = window.location
-  if (!isLocalHostName(hostname) && config.baseURL && isLocalApiUrl(config.baseURL)) {
+
+  // FIX16：若目前是本機前端，任何 request 都不得再打 114.34.58.174 或其他舊 IP。
+  if (isLocalHostName(hostname)) {
+    config.baseURL = 'http://127.0.0.1:8000/api'
+  } else if (config.baseURL && isBadExternalApiUrl(config.baseURL)) {
     config.baseURL = `${protocol}//${hostname}:8000/api`
   }
 
