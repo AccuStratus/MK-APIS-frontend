@@ -1,5 +1,5 @@
 :root {
-  --sidebar-width: 260px;
+  --sidebar-width: 300px;
   --bg: #f4f7fb;
   --card: #ffffff;
   --text: #1f2937;
@@ -44,12 +44,19 @@ body {
 }
 
 .brand {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  padding: 22px 18px;
+  display: block;
+  padding: 0px 0px;
   border-bottom: 1px solid rgba(255,255,255,0.08);
   flex: 0 0 auto;
+  overflow: visible;
+}
+
+.brand-logo-wrap {
+  display: block;
+  width: 100%;
+  margin: 0 0 14px 0;
+  clear: both;
+  overflow: visible;
 }
 
 .brand-logo {
@@ -64,16 +71,35 @@ body {
   color: white;
 }
 
+.brand-text {
+  display: block;
+  width: 100%;
+  clear: both;
+  margin-top: 0;
+  margin-left: 1rem;
+}
+
 .brand-title {
+  display: block;
+  width: 100%;
+  clear: both;
+  margin: 0;
   font-size: 19px;
   font-weight: 800;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
+  line-height: 1.35;
+  white-space: normal;
+  color: #f8fafc;
 }
 
 .brand-subtitle {
+  display: block;
+  width: 100%;
+  clear: both;
   color: #94a3b8;
   font-size: 13px;
-  margin-top: 2px;
+  margin-top: 4px;
+  line-height: 1.4;
 }
 
 .side-menu {
@@ -687,7 +713,31 @@ pre {
 
 @media (max-height: 760px) {
   .brand {
-    padding: 14px 14px;
+    padding: 12px 14px 14px;
+  }
+
+  .brand-image {
+    width: 230px;
+    margin-bottom: 12px;
+    padding: 7px 9px;
+  }
+
+  .brand-title {
+    font-size: 18px;
+  }
+}
+
+  .brand-title {
+    font-size: 18px;
+  }
+}
+
+  .brand-title {
+    font-size: 17px;
+  }
+
+  .brand {
+    padding: 0px 0px;
   }
 
   .user-box {
@@ -712,4 +762,32 @@ pre {
   .sidebar-footer {
     padding: 10px 14px;
   }
+}
+
+
+.brand-image {
+  width: 168px;
+  max-width: 100%;
+  max-height: none;
+  object-fit: contain;
+  object-position: left center;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 8px 10px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.18);
+}
+
+
+.login-logo-image {
+  width: 260px;
+  max-width: 100%;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+  display: block;
+  margin-bottom: 18px;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 10px 12px;
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
 }

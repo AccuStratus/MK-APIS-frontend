@@ -7,9 +7,9 @@
   <div v-else class="layout">
     <aside class="sidebar">
       <div class="brand">
-        <div class="brand-logo">AIPS</div>
-        <div>
-          <div class="brand-title">MK-AIPS</div>
+        <div class="brand-logo-wrap"><img class="brand-image" :src="minkingLogo" alt="MinKing Logo" /></div>
+        <div class="brand-text">
+          <div class="brand-title">MinKing AIPS</div>
           <div class="brand-subtitle">智慧排程模組</div>
         </div>
       </div>
@@ -43,7 +43,6 @@
       </nav>
 
       <div class="sidebar-footer">
-        <div>Demo Mode</div>
         <small>Vue 3 + FastAPI + PostgreSQL</small>
       </div>
     </aside>
@@ -76,6 +75,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import minkingLogo from './assets/minking-logo-brand.png'
 
 import LoginPage from './components/LoginPage.vue'
 import Dashboard from './components/Dashboard.vue'

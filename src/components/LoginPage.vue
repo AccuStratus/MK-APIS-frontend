@@ -1,8 +1,8 @@
 <template>
   <div class="login-page">
     <div class="login-card">
-      <div class="login-logo">AIPS</div>
-      <h1>MK-AIPS 智慧排程模組</h1>
+      <img class="login-logo-image" :src="minkingLogo" alt="MinKing Logo" />
+      <h1>MinKing AIPS 智慧排程模組</h1>
       <p>請先登入後再進入系統。</p>
 
       <div class="login-form">
@@ -39,6 +39,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import minkingLogo from '../assets/minking-logo-brand.png'
 import apiClient from '../api/apiClient'
 
 const emit = defineEmits(['login-success'])

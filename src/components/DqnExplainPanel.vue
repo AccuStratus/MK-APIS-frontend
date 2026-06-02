@@ -14,7 +14,6 @@
     </div>
 
     <div class="explain-banner">
-      <strong>委員說明重點：</strong>
       DQN 不是單純寫 if/else，它會把 ERP 製令、流程卡工序、CNC 智慧電表、WMS 線邊庫存轉成 State Vector，
       再比較每個 Action 的 Reward / Q Value，最後選擇分數最高的事件。
     </div>
@@ -127,7 +126,6 @@
     </section>
 
     <section class="card">
-      <h2>可以對委員這樣說</h2>
       <div class="speech-box">
         本系統的 DQN State 包含交期剩餘時間、LSTM/ARIMA 預估加工時間、CNC OEE、線邊庫缺料風險、智慧電表 THD 風險、品質風險與工序前置關係。
         DQN 會針對「立即加工、等待前工序、補料、停機維護、換 CNC、提高優先權」計算 Reward / Q Value。
