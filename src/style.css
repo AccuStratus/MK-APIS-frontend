@@ -99,6 +99,7 @@ body {
   font-size: 13px;
   margin-top: 4px;
   line-height: 1.4;
+  margin-left:1rem;
 }
 
 .side-menu {
@@ -729,10 +730,11 @@ pre {
   .brand-title {
     font-size: 18px;
   }
-}
+
 
   .brand-title {
     font-size: 17px;
+    margin-left:1rem;
   }
 
   .brand {
