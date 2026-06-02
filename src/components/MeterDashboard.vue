@@ -3,9 +3,6 @@
     <div class="page-header">
       <div>
         <h1 class="page-title">智慧電表即時監控</h1>
-        <p class="page-subtitle">
-          依上傳 FFA 專案智慧電表介面移植，並串聯 CNC-01 / CNC-02 / CNC-03、AIPS 特徵與 DQN State。
-        </p>
       </div>
       <div class="toolbar">
         <select v-model="selectedCnc" class="select-control" @change="load">
