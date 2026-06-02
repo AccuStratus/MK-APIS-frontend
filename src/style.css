@@ -45,7 +45,7 @@ body {
 
 .brand {
   display: block;
-  padding: 0px 0px;
+  padding: 16px 18px 18px;
   border-bottom: 1px solid rgba(255,255,255,0.08);
   flex: 0 0 auto;
   overflow: visible;
@@ -76,7 +76,6 @@ body {
   width: 100%;
   clear: both;
   margin-top: 0;
-  margin-left: 1rem;
 }
 
 .brand-title {
@@ -790,4 +789,207 @@ pre {
   border-radius: 14px;
   padding: 10px 12px;
   box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
+}
+
+
+/* FIX23 FFA 智慧電表移植 */
+.select-control {
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: white;
+  color: #0f172a;
+}
+
+.electric-dashboard {
+  background: #e6e6fa;
+  border: 1px solid #ddd;
+  box-shadow: 1px 2px 8px rgba(0,0,0,0.2);
+  border-radius: 18px;
+  padding: 18px;
+  margin-bottom: 18px;
+}
+
+.electric-top {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(180px, 1fr));
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.electric-card {
+  min-height: 92px;
+  border-radius: 14px;
+  padding: 18px;
+  text-align: center;
+  background: #f8fafc;
+  border: 1px solid rgba(148,163,184,0.28);
+  box-shadow: 0 8px 18px rgba(15,23,42,0.08);
+}
+
+.electric-card.blueBlock {
+  background: linear-gradient(135deg, #38bdf8, #2563eb);
+  color: white;
+}
+
+.electric-card.greenBlock {
+  background: linear-gradient(135deg, #22c55e, #15803d);
+  color: white;
+}
+
+.electric-card.color-down {
+  background: linear-gradient(135deg, #60a5fa, #1d4ed8);
+}
+
+.electric-card.dangerBlock {
+  background: linear-gradient(135deg, #f97316, #dc2626);
+  color: white;
+}
+
+.electric-value {
+  font-size: 26px;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.electric-footnote {
+  font-size: 14px;
+  opacity: 0.92;
+}
+
+.gauge-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.gauge-card,
+.chart-card {
+  background: white;
+  border-radius: 16px;
+  padding: 16px;
+  border: 1px solid rgba(148,163,184,0.28);
+}
+
+.gauge-title,
+.chart-title {
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+
+.linear-gauge {
+  height: 18px;
+  background: #e2e8f0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.linear-gauge span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #22c55e, #eab308, #ef4444);
+  border-radius: 999px;
+}
+
+.linear-gauge.danger span {
+  background: linear-gradient(90deg, #22c55e, #f97316, #dc2626);
+}
+
+.linear-gauge.load span {
+  background: linear-gradient(90deg, #38bdf8, #2563eb);
+}
+
+.radial-text {
+  font-size: 32px;
+  font-weight: 900;
+  color: #2563eb;
+  margin-bottom: 10px;
+}
+
+.gauge-meta {
+  margin-top: 10px;
+  color: #475569;
+}
+
+.bar-chart {
+  height: 260px;
+  display: flex;
+  gap: 18px;
+  align-items: end;
+  justify-content: center;
+  padding: 12px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.bar-item {
+  width: 70px;
+  text-align: center;
+}
+
+.bar-stack {
+  height: 210px;
+  display: flex;
+  gap: 5px;
+  align-items: end;
+  justify-content: center;
+}
+
+.bar-stack span {
+  width: 22px;
+  display: block;
+  border-radius: 8px 8px 0 0;
+}
+
+.bar-ae {
+  background: #34bfe1;
+}
+
+.bar-ce {
+  background: #2563eb;
+}
+
+.bar-label {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #475569;
+}
+
+.chart-legend {
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+  color: #475569;
+  flex-wrap: wrap;
+}
+
+.chart-legend i {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  border-radius: 3px;
+  margin-right: 6px;
+}
+
+.legend-ae {
+  background: #34bfe1;
+}
+
+.legend-ce {
+  background: #2563eb;
+}
+
+.footer-time {
+  padding: 16px 0 4px;
+  text-align: center;
+  color: #334155;
+  font-weight: 700;
+}
+
+@media (max-width: 1200px) {
+  .electric-top,
+  .gauge-grid {
+    grid-template-columns: 1fr;
+  }
 }

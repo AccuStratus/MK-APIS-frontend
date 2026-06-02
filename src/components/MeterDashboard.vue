@@ -1,46 +1,106 @@
 <template>
-  <div class="page">
+  <div class="page electric-page">
     <div class="page-header">
       <div>
-        <h1 class="page-title">CNC 智慧電表</h1>
+        <h1 class="page-title">智慧電表即時監控</h1>
         <p class="page-subtitle">
-          接收 CNC 智慧電表回傳的功率、需量、THD 等資料，轉成 AI 可用的設備狀態特徵。
+          依上傳 FFA 專案智慧電表介面移植，並串聯 CNC-01 / CNC-02 / CNC-03、AIPS 特徵與 DQN State。
         </p>
       </div>
       <div class="toolbar">
-        <button class="primary-btn" @click="insertRaw">新增電表資料</button>
-        <button @click="calculateFeature">計算此 CNC 特徵</button>
+        <select v-model="selectedCnc" class="select-control" @change="load">
+          <option value="ALL">全部 CNC</option>
+          <option value="CNC-01">CNC-01</option>
+          <option value="CNC-02">CNC-02</option>
+          <option value="CNC-03">CNC-03</option>
+        </select>
+        <button class="primary-btn" @click="seedAll">模擬三台 CNC 電表</button>
         <button @click="load">重新整理</button>
       </div>
     </div>
 
+    <div class="electric-dashboard">
+      <div class="electric-top">
+        <div class="electric-card blueBlock">
+          <div class="electric-value">{{ formatNumber(current.currentData?.monthlyAe) }} kWh</div>
+          <div class="electric-footnote">本月用電度</div>
+        </div>
+        <div class="electric-card blueBlock color-down">
+          <div class="electric-value">{{ formatNumber(current.currentData?.lastYearMonthlyAe) }} kWh</div>
+          <div class="electric-footnote">去年同期用電度</div>
+        </div>
+        <div class="electric-card blueBlock">
+          <div class="electric-value">{{ formatNumber(current.currentData?.carbonEmission) }} kg</div>
+          <div class="electric-footnote">本月碳排量</div>
+        </div>
+        <div class="electric-card blueBlock color-down">
+          <div class="electric-value">{{ formatNumber(current.currentData?.lastYearCarbonEmission) }} kg</div>
+          <div class="electric-footnote">去年同期碳排量</div>
+        </div>
+      </div>
+
+      <div class="electric-top">
+        <div class="electric-card greenBlock">
+          <div class="electric-value">{{ formatNumber(current.currentData?.p) }} kW</div>
+          <div class="electric-footnote">即時用電量</div>
+        </div>
+        <div class="electric-card greenBlock">
+          <div class="electric-value">{{ formatNumber(current.currentData?.pdm) }} kW</div>
+          <div class="electric-footnote">最大需量</div>
+        </div>
+        <div class="electric-card" :class="{ dangerBlock: Number(current.currentData?.thdCurrent || 0) >= 15 }">
+          <div class="electric-value">{{ formatNumber(current.currentData?.thdCurrent) }} %</div>
+          <div class="electric-footnote">THD 電流</div>
+        </div>
+        <div class="electric-card">
+          <div class="electric-value">{{ formatNumber(current.currentData?.pf, 2) }}</div>
+          <div class="electric-footnote">功率因數</div>
+        </div>
+      </div>
+
+      <div class="gauge-grid">
+        <div class="gauge-card">
+          <div class="gauge-title">電壓不平衡度</div>
+          <div class="linear-gauge"><span :style="{ width: `${voltagePercent}%` }"></span></div>
+          <div class="gauge-meta">{{ formatNumber(current.currentData?.uunbl) }} %｜{{ voltageStatus }}</div>
+        </div>
+        <div class="gauge-card">
+          <div class="gauge-title">電流不平衡度</div>
+          <div class="linear-gauge danger"><span :style="{ width: `${currentPercent}%` }"></span></div>
+          <div class="gauge-meta">{{ formatNumber(current.currentData?.lunbl) }} %｜{{ currentStatus }}</div>
+        </div>
+        <div class="gauge-card">
+          <div class="gauge-title">負載率</div>
+          <div class="radial-text">{{ formatNumber(current.currentData?.loadFactor) }}%</div>
+          <div class="linear-gauge load"><span :style="{ width: `${loadPercent}%` }"></span></div>
+          <div class="gauge-meta">{{ current.currentData?.machineStatus || '-' }}</div>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-title">每月用電量 / 最大需量 / 碳排量</div>
+        <div class="bar-chart">
+          <div v-for="row in current.monthlyDataList || []" :key="row.monthString" class="bar-item">
+            <div class="bar-stack">
+              <span class="bar-ae" :style="{ height: `${barHeight(row.maxAe)}%` }"></span>
+              <span class="bar-ce" :style="{ height: `${barHeight(row.maxCe)}%` }"></span>
+            </div>
+            <div class="bar-label">{{ row.monthString }}</div>
+          </div>
+        </div>
+        <div class="chart-legend">
+          <span><i class="legend-ae"></i>最大用電量</span>
+          <span><i class="legend-ce"></i>最大碳排量</span>
+          <span>最大需量：{{ formatNumber(lastMonthly?.maxPdm) }} kW</span>
+        </div>
+      </div>
+
+      <div class="footer-time">{{ dateTimeString }}</div>
+    </div>
+
     <div class="card">
-      <h2>新增電表資料</h2>
-
-      <div class="form-grid">
-        <label>CNC 機台<input v-model="form.cnc_machine_id" /></label>
-        <label>設備 IP<input v-model="form.device_ip" /></label>
-        <label>功率 kW<input v-model.number="form.power_kw" type="number" /></label>
-        <label>需量 kW<input v-model.number="form.demand_kw" type="number" /></label>
-        <label>THD 電流<input v-model.number="form.thd_current" type="number" /></label>
-        <label>功率因數<input v-model.number="form.power_factor" type="number" /></label>
-        <label>累積電量<input v-model.number="form.power_kwh" type="number" /></label>
-      </div>
-
-      <div class="stock-summary">
-        <div class="stock-box">
-          <span>功率狀態</span>
-          <strong>{{ powerStatus }}</strong>
-        </div>
-        <div class="stock-box" :class="{ danger: form.thd_current >= 15 }">
-          <span>THD 判斷</span>
-          <strong>{{ form.thd_current >= 15 ? '諧波偏高' : '正常' }}</strong>
-        </div>
-        <div class="stock-box">
-          <span>預估機台</span>
-          <strong>{{ estimatedMachineStatus }}</strong>
-        </div>
-      </div>
+      <h2>CNC 與智慧電表連線</h2>
+      <DataTable :columns="linkColumns" :rows="current.cncLinks || []" :labels="linkLabels" />
     </div>
 
     <div class="card">
@@ -56,87 +116,81 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import apiClient from '../api/apiClient'
 import DataTable from './DataTable.vue'
 
-const form = ref({
-  cnc_machine_id: 'CNC-01',
-  device_ip: '192.168.1.200',
-  power_kw: 6.5,
-  demand_kw: 7.0,
-  thd_current: 8.0,
-  power_factor: 0.92,
-  power_kwh: 1000
-})
-
+const selectedCnc = ref('ALL')
+const current = ref({})
 const rows = ref([])
 const features = ref([])
+const dateTimeString = ref('')
+let timer = null
 
-const rawColumns = ['meter_data_id', 'collect_time', 'cnc_machine_id', 'power_kw', 'demand_kw', 'thd_current', 'power_factor', 'device_ip']
-const rawLabels = {
-  meter_data_id: '編號',
-  collect_time: '收集時間',
-  cnc_machine_id: 'CNC 機台',
-  power_kw: '功率 kW',
-  demand_kw: '需量 kW',
-  thd_current: 'THD 電流',
-  power_factor: '功率因數',
-  device_ip: '設備 IP'
-}
+const linkColumns = ['cnc_machine_id', 'meter_id', 'device_ip', 'protocol_type', 'modbus_unit_id', 'connected_flag', 'machine_status', 'power_kw', 'demand_kw', 'thd_current', 'estimated_machine_status']
+const linkLabels = { cnc_machine_id: 'CNC', meter_id: '電表ID', device_ip: 'IP', protocol_type: '協定', modbus_unit_id: 'Modbus ID', connected_flag: '連線', machine_status: '機台狀態', power_kw: '功率', demand_kw: '需量', thd_current: 'THD', estimated_machine_status: 'AI狀態' }
+
+const rawColumns = ['meter_data_id', 'collect_time', 'cnc_machine_id', 'power_kw', 'demand_kw', 'thd_current', 'power_factor', 'power_kwh', 'device_ip']
+const rawLabels = { meter_data_id: '編號', collect_time: '收集時間', cnc_machine_id: 'CNC', power_kw: '功率 kW', demand_kw: '需量 kW', thd_current: 'THD', power_factor: '功率因數', power_kwh: '累積電量', device_ip: '設備 IP' }
 
 const featureColumns = ['feature_id', 'feature_time', 'cnc_machine_id', 'avg_power_kw_5min', 'thd_current_avg', 'estimated_machine_status', 'machine_abnormal_power_flag']
-const featureLabels = {
-  feature_id: '編號',
-  feature_time: '特徵時間',
-  cnc_machine_id: 'CNC 機台',
-  avg_power_kw_5min: '5 分鐘平均功率',
-  thd_current_avg: '平均 THD 電流',
-  estimated_machine_status: '預估狀態',
-  machine_abnormal_power_flag: '電力異常'
-}
+const featureLabels = { feature_id: '編號', feature_time: '特徵時間', cnc_machine_id: 'CNC', avg_power_kw_5min: '5分鐘平均功率', thd_current_avg: '平均THD', estimated_machine_status: 'AI狀態', machine_abnormal_power_flag: '電力異常' }
 
-const powerStatus = computed(() => {
-  if (form.value.power_kw >= 12) return '高負載'
-  if (form.value.power_kw >= 3) return '加工中'
-  if (form.value.power_kw >= 0.5) return '待機'
-  return '停止'
+const voltagePercent = computed(() => Math.min(Number(current.value.currentData?.uunbl || 0) / 10 * 100, 100))
+const currentPercent = computed(() => Math.min(Number(current.value.currentData?.lunbl || 0) / 15 * 100, 100))
+const loadPercent = computed(() => Math.min(Number(current.value.currentData?.loadFactor || 0), 100))
+const lastMonthly = computed(() => (current.value.monthlyDataList || []).slice(-1)[0])
+
+const voltageStatus = computed(() => {
+  const v = Number(current.value.currentData?.uunbl || 0)
+  if (v >= 8) return '危險'
+  if (v >= 5) return '異常'
+  if (v >= 2) return '注意'
+  return '正常'
 })
 
-const estimatedMachineStatus = computed(() => {
-  if (form.value.thd_current >= 15 || form.value.power_kw >= 12) return 'ABNORMAL'
-  if (form.value.power_kw >= 3) return 'RUNNING'
-  if (form.value.power_kw >= 0.5) return 'IDLE'
-  return 'STOPPED'
+const currentStatus = computed(() => {
+  const v = Number(current.value.currentData?.lunbl || 0)
+  if (v >= 12) return '危險'
+  if (v >= 8) return '異常'
+  return '正常'
 })
 
-async function insertRaw() {
-  await apiClient.post('/meter/raw', {
-    ...form.value,
-    meter_id: `METER-${form.value.cnc_machine_id}`,
-    mqtt_topic: `AIPS/${form.value.cnc_machine_id}/METER`,
-    voltage_r: 220,
-    voltage_s: 220,
-    voltage_t: 220,
-    current_r: 12,
-    current_s: 12,
-    current_t: 12,
-    frequency_hz: 60,
-    thd_voltage: 2.1,
-    phase_imbalance_rate: 1.2
-  })
-  await load()
+function formatNumber(value, decimals = 1) {
+  const n = Number(value || 0)
+  return n.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })
 }
 
-async function calculateFeature() {
-  await apiClient.post(`/meter/features/calculate/${form.value.cnc_machine_id}`)
+function barHeight(value) {
+  const rows = current.value.monthlyDataList || []
+  const max = Math.max(...rows.map(r => Math.max(Number(r.maxAe || 0), Number(r.maxCe || 0))), 1)
+  return Math.max(8, Math.round(Number(value || 0) / max * 100))
+}
+
+function updateTime() {
+  const d = new Date()
+  dateTimeString.value = d.toLocaleString('zh-TW', { hour12: false })
+}
+
+async function seedAll() {
+  await apiClient.post('/meter/electric/demo-all')
   await load()
 }
 
 async function load() {
-  rows.value = (await apiClient.get('/meter/raw/latest')).data
-  features.value = (await apiClient.get('/meter/features/latest')).data
+  current.value = (await apiClient.get('/meter/electric/monitor', { params: { cnc_machine_id: selectedCnc.value } })).data || {}
+  rows.value = (await apiClient.get('/meter/raw/latest')).data || []
+  features.value = (await apiClient.get('/meter/features/latest')).data || []
 }
 
-onMounted(load)
+onMounted(() => {
+  updateTime()
+  load()
+  timer = setInterval(() => {
+    updateTime()
+    load()
+  }, 5000)
+})
+
+onUnmounted(() => clearInterval(timer))
 </script>
