@@ -1155,3 +1155,718 @@ pre {
   align-items: center;
   flex-wrap: wrap;
 }
+
+
+
+
+/* FIX32：DQN Reward 說明頁樣式改回 Vue 版一致 */
+.explain-banner {
+  background: #eef6ff;
+  border: 1px solid #bfdbfe;
+  color: #1e3a8a;
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  line-height: 1.8;
+}
+
+.section-note {
+  color: #64748b;
+  margin-bottom: 12px;
+  line-height: 1.8;
+}
+
+.flow-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.flow-box {
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 14px;
+  background: #f8fafc;
+}
+
+.flow-box h3 {
+  margin: 0 0 8px;
+  color: #0f172a;
+}
+
+.flow-box p {
+  margin: 0;
+  color: #64748b;
+  line-height: 1.7;
+}
+
+.formula-list {
+  display: grid;
+  gap: 10px;
+}
+
+.formula-item {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 12px;
+  align-items: center;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: #fafafa;
+}
+
+.formula-item strong {
+  color: #0f172a;
+}
+
+.formula-item span {
+  color: #334155;
+}
+
+.cnc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.cnc-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 14px;
+  background: white;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+  position: static;
+  overflow: visible;
+}
+
+.cnc-card::before {
+  display: none !important;
+  content: none !important;
+}
+
+.cnc-title {
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.best-action {
+  display: inline-block;
+  background: #dbeafe;
+  color: #1d4ed8;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.state-line {
+  color: #64748b;
+  font-size: 12px;
+  margin-bottom: 12px;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.reward-bars {
+  display: grid;
+  gap: 8px;
+}
+
+.reward-row {
+  display: grid;
+  grid-template-columns: 140px 1fr 42px;
+  gap: 8px;
+  align-items: center;
+  font-size: 12px;
+}
+
+.reward-name {
+  color: #334155;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bar {
+  height: 10px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+  box-shadow: none;
+}
+
+.bar-inner {
+  height: 100%;
+  background: linear-gradient(90deg, #60a5fa, #2563eb);
+  border-radius: 999px;
+}
+
+.reward-score {
+  text-align: right;
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.explain-small {
+  margin-top: 12px;
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.7;
+  background: transparent;
+  padding: 0;
+}
+
+.speech-box {
+  background: #f8fafc;
+  border-left: 5px solid #2563eb;
+  border-radius: 14px;
+  padding: 16px;
+  line-height: 2;
+  color: #0f172a;
+  font-size: 15px;
+}
+
+@media (max-width: 1200px) {
+  .flow-grid,
+  .cnc-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* FIX33：React 模擬器總覽恢復 Vue 版畫面 */
+.arch-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.arch-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+.arch-card h2 {
+  margin: 0 0 10px;
+  color: #0f172a;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.arch-card p {
+  margin: 0;
+  color: #64748b;
+  line-height: 1.8;
+}
+
+.flow-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.flow-step {
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 14px;
+  background: #f8fafc;
+}
+
+.flow-step strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #0f172a;
+  font-weight: 800;
+}
+
+.flow-step span {
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+@media (max-width: 1200px) {
+  .arch-grid,
+  .flow-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* FIX35 使用者 CRUD 管理 */
+.user-crud-form select {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: white;
+  color: #0f172a;
+}
+
+.checkbox-line {
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  padding-top: 22px;
+  color: #334155;
+  font-weight: 700;
+}
+
+.checkbox-line input {
+  width: auto !important;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.table-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.table-actions button {
+  white-space: nowrap;
+  padding: 7px 10px;
+  border-radius: 9px;
+}
+
+
+/* FIX36 使用者 CRUD 排版修正 */
+.user-crud-form {
+  align-items: end;
+}
+
+.user-crud-form label {
+  min-height: 78px;
+}
+
+.user-crud-form .checkbox-line {
+  min-height: 78px;
+  align-items: center;
+  justify-content: center;
+  padding-top: 0 !important;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #f8fafc;
+}
+
+.user-crud-form .checkbox-line input {
+  width: 18px !important;
+  height: 18px;
+}
+
+.table-actions .danger-outline-btn,
+.form-actions .danger-outline-btn {
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  background: #fff;
+}
+
+
+/* FIX37：使用者 CRUD 啟用 checkbox 與上方欄位同排 */
+.user-crud-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 120px;
+  gap: 12px;
+  align-items: end;
+}
+
+.user-crud-form label {
+  min-height: auto !important;
+}
+
+.enabled-field {
+  display: flex !important;
+  flex-direction: column;
+  gap: 6px;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.enabled-box {
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #0f172a;
+  font-size: 14px;
+}
+
+.enabled-box input {
+  width: 16px !important;
+  height: 16px;
+  margin: 0;
+}
+
+.enabled-box span {
+  line-height: 1;
+}
+
+.user-crud-form .checkbox-line {
+  display: none !important;
+}
+
+@media (max-width: 1400px) {
+  .user-crud-form {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .user-crud-form {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* FIX38：所有 DataTable 全域搜尋框 + 分頁 */
+.data-table-panel {
+  width: 100%;
+}
+
+.table-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 12px;
+  flex-wrap: wrap;
+}
+
+.table-search-wrap {
+  flex: 1 1 320px;
+}
+
+.table-search-input {
+  width: 100%;
+  max-width: 520px;
+  height: 38px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 8px 12px;
+  background: #ffffff;
+  color: #0f172a;
+  outline: none;
+}
+
+.table-search-input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.table-page-size {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #475569;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.table-page-size select {
+  height: 36px;
+  min-width: 72px;
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+  background: white;
+  color: #0f172a;
+  padding: 6px 8px;
+}
+
+.table-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  color: #475569;
+  font-size: 13px;
+  flex-wrap: wrap;
+}
+
+.table-page-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.table-page-buttons button {
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #334155;
+  border-radius: 9px;
+  padding: 7px 10px;
+  cursor: pointer;
+}
+
+.table-page-buttons button:hover:not(:disabled) {
+  background: #eff6ff;
+  border-color: #93c5fd;
+  color: #1d4ed8;
+}
+
+.table-page-buttons button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.page-current {
+  min-width: 72px;
+  text-align: center;
+  font-weight: 800;
+  color: #0f172a;
+  background: #f1f5f9;
+  border-radius: 999px;
+  padding: 7px 10px;
+}
+
+@media (max-width: 900px) {
+  .table-toolbar,
+  .table-pagination {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .table-search-input {
+    max-width: none;
+  }
+
+  .table-page-buttons {
+    justify-content: flex-start;
+  }
+}
+
+
+/* FIX40：Dashboard ERP 製令單拆成已處理 / 未處理，並移到最左邊 */
+.dashboard-metric-grid {
+  grid-template-columns: repeat(5, minmax(180px, 1fr));
+}
+
+.dashboard-metric-grid .metric-card:nth-child(1) {
+  border-left: 5px solid #22c55e;
+}
+
+.dashboard-metric-grid .metric-card:nth-child(2) {
+  border-left: 5px solid #f97316;
+}
+
+@media (max-width: 1500px) {
+  .dashboard-metric-grid {
+    grid-template-columns: repeat(3, minmax(180px, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .dashboard-metric-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* FIX41：AI 決策表格欄位補值、移除表格右上每頁選擇 */
+.table-toolbar.no-page-size {
+  justify-content: flex-start;
+}
+
+.table-toolbar.no-page-size .table-search-input {
+  max-width: 520px;
+}
+
+/* 若舊 CSS 還存在 page-size，直接隱藏 */
+.table-page-size {
+  display: none !important;
+}
+
+
+/* FIX44：Logo 專用安全版
+   不要再用 .sidebar-brand / .logo-card 這種共用 class，會影響整個側邊欄排版。
+   只鎖定目前 App.jsx 實際使用的 .brand / .brand-logo-wrap / .brand-image。 */
+.sidebar .brand {
+  padding: 10px 10px 12px !important;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  overflow: visible;
+}
+
+.sidebar .brand-logo-wrap {
+  width: 100%;
+  height: auto;
+  margin: 0 0 8px 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  overflow: visible !important;
+}
+
+.sidebar .brand-image {
+  display: block;
+  width: 250px;
+  max-width: calc(var(--sidebar-width) - 20px);
+  height: auto;
+  max-height: 76px;
+  object-fit: contain;
+  object-position: left center;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.sidebar .brand-text {
+  margin-top: 6px !important;
+}
+
+.sidebar .brand-title {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 19px;
+  line-height: 1.25;
+  margin-left:1rem !important;
+}
+
+.sidebar .brand-subtitle {
+  margin-top: 3px;
+  line-height: 1.25;
+}
+
+@media (max-height: 760px) {
+  .sidebar .brand {
+    padding: 8px 8px 10px !important;
+  }
+
+  .sidebar .brand-image {
+    width: 240px;
+    max-height: 70px;
+  }
+
+  .sidebar .brand-title {
+    font-size: 18px;
+  }
+}
+
+
+/* FIX74：使用使用者提供的原始國興資訊 IKS Logo；文字只顯示 SI */
+.sidebar-si-card,
+.login-si-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #bfdbfe;
+  background: #eff6ff;
+  color: #1e3a8a;
+  border-radius: 12px;
+  padding: 8px 10px;
+}
+
+.sidebar-si-card {
+  margin: 0 0 14px 0;
+}
+
+.login-si-card {
+  margin: 12px 0 20px;
+  justify-content: center;
+}
+
+.si-label {
+  font-size: 14px;
+  letter-spacing: 0.4px;
+  color: #334155;
+  white-space: nowrap;
+}
+
+.si-company {
+  color: #1d4ed8;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.si-logo-image {
+  width: 56px;
+  height: 28px;
+  object-fit: contain;
+  background: #ffffff;
+  border-radius: 4px;
+}
+
+.login-si-logo {
+  width: 70px;
+  height: 34px;
+  object-fit: contain;
+  background: #ffffff;
+  border-radius: 4px;
+}
+
+
+/* FIX75：修正 IKS Logo 吃錯圖，改用使用者本次上傳的純 IKS 原圖；文字只顯示 SI */
+.sidebar-si-card,
+.login-si-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #bfdbfe;
+  background: #eff6ff;
+  color: #1e3a8a;
+  border-radius: 12px;
+}
+
+.sidebar-si-card {
+  margin: 0 10px 14px 0.1rem;
+  padding: 8px 10px;
+  justify-content: center;
+}
+
+.login-si-card {
+  margin: 12px 0 20px;
+  padding: 10px 12px;
+  justify-content: center;
+}
+
+.si-label {
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  color: #334155;
+  white-space: nowrap;
+}
+
+.si-company {
+  color: #1d4ed8;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.si-logo-image {
+  width: 70px;
+  height: 54px;
+  object-fit: contain;
+  background: #ffffff;
+  border-radius: 6px;
+  padding: 2px;
+}
+
+.login-si-logo {
+  width: 82px;
+  height: 64px;
+  object-fit: contain;
+  background: #ffffff;
+  border-radius: 6px;
+  padding: 2px;
+}

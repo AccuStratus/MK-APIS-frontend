@@ -1,6 +1,6 @@
 {
-  "name": "aips-vue3-frontend",
-  "version": "0.1.0",
+  "name": "aips-react-frontend",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,11 +9,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vitejs/plugin-react": "latest",
     "axios": "latest",
-    "vue": "latest"
+    "vite": "latest",
+    "typescript": "latest",
+    "react": "latest",
+    "react-dom": "latest"
   },
-  "devDependencies": {
-    "@vitejs/plugin-vue": "latest",
-    "vite": "latest"
-  }
+  "devDependencies": {}
 }
